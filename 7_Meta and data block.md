@@ -31,13 +31,17 @@
 ### Technical Interview Questions and Answers
 
 1. **Q1**: How does a MetaBlock store information about its associated Data Block?
-   **A1**: A MetaBlock stores information such as the size of the Data Block, a pointer to the next MetaBlock, and a Boolean variable indicating whether the associated Data Block is free or occupied.
+   **A1**: A MetaBlock stores information such as the
+   -  `size of the Data Block`, 
+   -  a `pointer to the next MetaBlock`, and a 
+   -  `Boolean variable` indicating whether the associated Data Block is free or occupied.
 
 2. **Q2**: Why does the operating system sometimes add padding bytes to memory allocations, and how does this relate to 4-byte alignment?
    **A2**: Padding bytes are added to make the total size of the MetaBlock and DataBlock an integer multiple of four, known as 4-byte alignment. CPUs can access memory more efficiently when it's aligned this way, enhancing system performance.
 
 3. **Q3**: How does the `malloc` function know the starting address of a Data Block to return to the process?
-   **A3**: The `malloc` function, upon allocating a Data Block and MetaBlock, returns the starting address of the Data Block to the process. This address points to the memory location in the heap segment where the process can read or write its data.
+   **A3**: The `malloc` function, upon allocating a Data Block and MetaBlock, 
+   - returns the `starting address of the Data Block` to the process. This address points to the memory location in the heap segment where the process can read or write its data.
 
 4. **Q4**: How can a custom `malloc` function ensure that it properly creates a Data Block and associated MetaBlock and returns the correct address?
    **A4**: A custom `malloc` function should: allocate the requested memory size plus the size of a MetaBlock, fill in the MetaBlock with details about the Data Block, and then return the starting address of the Data Block to the calling process.
