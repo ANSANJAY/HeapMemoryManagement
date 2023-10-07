@@ -66,7 +66,9 @@ In a nutshell, when your program asks the computer for some space to keep its da
 ---
 ## Representation of memory allocation and deallocation in a heap memory segment, considering both Data Blocks and Meta Blocks.
 
-### Memory Allocation:
+----
+
+# Memory Allocation:
 
 ```sql
 |---------------------| <--- Original Break Pointer
@@ -87,8 +89,10 @@ In a nutshell, when your program asks the computer for some space to keep its da
 - The Meta Block (12 bytes for example) stores info about the Data Block (like size, usage status, and pointer to the next Meta Block).
 - Data Block is of 14 bytes as per your example and is where the process stores its data.
 - Padding bytes ensure the total block size is a multiple of 4, enhancing memory access efficiency for the CPU (this might be adjusted based on specific alignment details).
-  
-### Memory Deallocation:
+
+---
+
+# Memory Deallocation:
 
 ```sql
 |---------------------| <--- Original Break Pointer
