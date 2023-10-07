@@ -1,6 +1,6 @@
 # brk and sbrk System Calls 📘 
 
-1. **BRK System Call:**
+1. **BRK System Call:** -- Address to set the break pointer. 
    - **Synopsis:** `int brk(void *addr);`
    - **Working:** Expands or contracts the heap memory segment of a process.
    - **Arguments:** `addr` - Address to set the break pointer.
@@ -8,13 +8,54 @@
    - **Usage:** It's utilized to alter the break pointer to claim more heap memory.
    - **Precaution:** Must ensure that the provided address is valid within the process’s virtual address space.
 
-2. **Sbrk System Call:**
+
+2. **Sbrk System Call:** -- increment` - Number of bytes to adjust the heap size.
    - **Synopsis:** `void *sbrk(intptr_t increment);`
    - **Working:** Adjusts the program’s break pointer.
    - **Arguments:** `increment` - Number of bytes to adjust the heap size.
    - **Return Values:** Address of the old break pointer on success, (void *)-1 or NULL on failure.
    - **Usage:** Mainly for manipulating the heap memory and is directly associated with heap memory allocation.
    - **Special Case:** When called with 0 as an argument, it returns the current value of the break pointer without expanding the heap memory region.
+
+```C
+
+#define _GNU_SOURCE
+#include <assert.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+    void *b;
+    void *nb;
+
+    // Get the current break point.
+    b = sbrk(0);
+    printf("Current break point: %p\n", b);
+
+    // Allocate 256 bytes from heap.
+    nb = (char *) b + 256;
+    if (brk(nb) == -1) {
+        // Handle error: Unable to allocate memory.
+        perror("brk");
+        return 1;
+    }
+
+    printf("New break point after allocating 256 bytes: %p\n", nb);
+
+    // Use the memory...
+
+    // Deallocate 256 bytes from heap.
+    if (brk(b) == -1) {
+        // Handle error: Unable to deallocate memory.
+        perror("brk");
+        return 1;
+    }
+
+    printf("Break point after deallocating 256 bytes: %p\n", b);
+
+    return 0;
+}
+```
 
 3. **Use of BRK and sbrk in Heap Management:**
    - Both system calls are integral for managing heap memory.
@@ -25,7 +66,13 @@
    - `malloc` uses `sbrk` (or might use other system calls depending on the implementation) for allocating memory by expanding the heap segment.
    - `malloc` is essentially a wrapper over `sbrk` (in traditional implementations).
 
----
+
+## Explanation:
+
+- sbrk(0): Obtains the current break point, i.e., the end of the heap segment.
+- brk(nb): Allocates 256 bytes of heap memory by moving the break point to nb. The previous break point was stored in b, so moving it to nb essentially allocates nb - b bytes (here, 256 bytes).
+- Use the memory: In practice, between the two brk calls you would utilize the heap memory that has been allocated. Be mindful to not overflow the allocated region.
+- brk(b): Deallocates the 256 bytes by moving the break point back to its initial position.
 
 # 💡 Curiosity
 
