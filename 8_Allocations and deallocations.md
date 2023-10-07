@@ -1,6 +1,6 @@
 # MetaBlock and DataBlock 📘
 
-### MetaBlock and DataBlock in Heap Memory Management
+# MetaBlock and DataBlock in Heap Memory Management
 
 1. **Data Block** 📦
    - Allocated memory segment for a process where it can read or write its data.
@@ -29,9 +29,9 @@
 
 ---
 
-## Curiosity 🤔
+# Curiosity 🤔
 
-### Technical Interview Questions and Answers
+
 
 1. **Q1:** How does a Meta Block facilitate heap memory management in relation to a Data Block?
    
