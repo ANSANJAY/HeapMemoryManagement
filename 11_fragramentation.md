@@ -14,6 +14,7 @@ Memory fragmentation is a situation in the management of memory where memory spa
   - **Occurrence:** It arises when free memory blocks are scattered, i.e., non-contiguous, thereby preventing their collective use to satisfy memory requests.
   - **Example:** Even though there might be two 16-byte blocks available (totaling 32 bytes), a 20-byte memory request can’t be satisfied if these blocks are non-contiguous.
 
+## size of metablock is 12 bytes.
 ---
 
 ### 🧐 Curiosity
