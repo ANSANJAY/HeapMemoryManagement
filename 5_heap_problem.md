@@ -52,3 +52,53 @@
 - **Operating System's Role**: The operating system is like the manager of this space, making sure each program gets its asked space and ensures no two programs use the same spot unless it's freed. It remembers how much space was given to each request (using some internal record-keeping) so that when `free` is called, it knows how much space to free up, even though we just give it the starting address.
 
 - **Being Safe with Memory**: It’s important that the addresses given to `free` were once provided by `malloc`, to make sure we don’t accidentally ask the heap to clear out important or wrong areas. So, the operating system has to double-check this to keep things running smoothly and avoid errors or crashes.
+
+## Diagram to represent how the heap memory allocation and freeing process, as explained in the given problem statement, works. 
+
+```python
++--------------------- Heap Memory ---------------------+
+|  P1 (20 bytes)   |  P2 (10 bytes)  | P3 (10 bytes)   | P4 (15 bytes) | P5 (20 bytes) |
++-------------------+-----------------+-----------------+---------------+--------------+
+
+    |                    |                  |                  |                   |
+    V                    V                  V                  V                   V
+ 20 bytes             10 bytes           10 bytes           15 bytes            20 bytes
+
+Allocated           Allocated          Allocated          Allocated           Allocated
+Memory Blocks       Memory Blocks      Memory Blocks      Memory Blocks       Memory Blocks
+
+```
+
+# Explanation:
+
+- Each section `P1, P2, P3, P4, and P5` represents a block of heap memory allocated using `malloc`. The number within the parenthesis represents the number of bytes allocated for each block.
+  
+- Each `V` arrow represents the pointer variables (like P1, P2, etc.) pointing towards the allocated memory block. 
+
+# Memory Freeing Scenario:
+
+```
++--------------------- Heap Memory ---------------------+
+|  P1 (20 bytes)   |  P2 (10 bytes)  | xxxxxxxxxx   | P4 (15 bytes) | P5 (20 bytes) |
++-------------------+-----------------+-----------------+---------------+--------------+
+
+    |                    |                 X                  |                   |
+    V                    V                                    V                   V
+ 20 bytes             10 bytes                             15 bytes            20 bytes
+
+Allocated           Allocated                              Allocated           Allocated
+Memory Blocks       Memory Blocks                          Memory Blocks       Memory Blocks
+
+```
+
+### Explanation:
+
+- When `free(P3)` is called, the 10 bytes of memory that `P3` was pointing to gets deallocated (represented by `xxxxxxxxxx`), and the arrow `X` is crossed out, indicating that the pointer `P3` is no longer valid or has been set to `NULL`.
+  
+### Notes:
+
+- **P1, P2, etc.**: Pointer variables which store the starting address of the memory blocks allocated by `malloc`.
+  
+- **xxxxxxxxxx**: Represents memory that has been freed using `free()`.
+
+This simple ASCII diagram illustrates how memory is allocated and freed in the heap memory region. When memory is allocated, it's represented by sections with the pointer variable and size. When it's freed, the memory region is denoted with `x`s to showcase that it's no longer in use.
